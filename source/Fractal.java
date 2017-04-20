@@ -6,10 +6,11 @@ import java.awt.*;
 
 public abstract class Fractal {
 
-	private ArrayList<Path2D.Double> iterations;
-	private int currIteration;
+	protected ArrayList<Path2D.Double> iterations;
+	protected int currIteration;
 
 	public Fractal() {
+		iterations = new ArrayList<Path2D.Double>();
 		currIteration = 0;
 		iterations.add(constructFirstIteration());
 	}
@@ -28,10 +29,10 @@ public abstract class Fractal {
 	public void stepUp() {
 		currIteration++;
 		if (iterations.size() <= currIteration) {
-			iterations.add(nextIteration());
+			iterations.add(nextIteration(iterations.get(currIteration-1)));
 		}
 	}
 
 	abstract Path2D.Double constructFirstIteration();
-	abstract Path2D.Double nextIteration();
+	abstract Path2D.Double nextIteration(Path2D.Double previous);
 }

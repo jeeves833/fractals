@@ -17,10 +17,20 @@ public class FractalViewer {
 	private double[] p2;
 
 	public FractalViewer() {
+		p1 = new double[]{160, 180};
+		p2 = new double[]{320, 180};
 		prepareGUI();
+		int level = 8;
+		DragonCurve dragon = new DragonCurve();
+		for (int i = 0; i < level; i++) {
+			// System.out.println(i);
+			dragon.stepUp();
+		}
+		System.out.println("done");
+		dragon.drawTo(g2d, p1, p2);
 
 		// Path2D.Double path = new Path2D.Double();
-		// path.moveTo(200, 200);
+		// path.moveTo(0, 0);
 		// path.lineTo(300, 300);
 		// // System.out.println(g2d.getColor());
 		// g2d.draw(path);
