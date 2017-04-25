@@ -15,19 +15,19 @@ public class FractalViewer {
 	private Graphics2D g2d;
 	private double[] p1;
 	private double[] p2;
+	private Fractal currentFractal;
 
 	public FractalViewer() {
 		p1 = new double[]{160, 180};
 		p2 = new double[]{320, 180};
 		prepareGUI();
-		int level = 8;
-		DragonCurve dragon = new DragonCurve();
-		for (int i = 0; i < level; i++) {
-			// System.out.println(i);
-			dragon.stepUp();
-		}
-		System.out.println("done");
-		dragon.drawTo(g2d, p1, p2);
+		currentFractal = new DragonCurve();
+		// currentFractal.stepUp();
+		refresh();
+		// System.out.println("Ready");
+		// dragon.drawTo(g2d, p1, p2);
+		// dragon.stepUp();
+		// dragon.drawTo(g2d, p1, p2);
 
 		// Path2D.Double path = new Path2D.Double();
 		// path.moveTo(0, 0);
@@ -54,13 +54,42 @@ public class FractalViewer {
 		g2d = canvas.createGraphics();
 		g2d.fillRect(0, 0, 480, 360);
 		imageLabel = new JLabel(new ImageIcon(canvas));
+		imageLabel.addKeyListener(new FractalButtonListener());
+		imageLabel.setFocusable(true);
 		mainFrame.add(imageLabel);
-		g2d.setPaint(new Color(0));
 		mainFrame.setVisible(true);
+		g2d.setPaint(Color.BLACK);
+		// refresh();
 	}
 
 	private void clearGUI() {
-		g2d.setPaint(new Color(0xFFFFFF));
+		g2d.setPaint(Color.WHITE);
 		g2d.fillRect(0, 0, 480, 360);
+		g2d.setPaint(Color.BLACK);
+	}
+
+	private void refresh() {
+		clearGUI();
+		currentFractal.drawTo(g2d, p2, p1);
+		mainFrame.repaint();
+	}
+
+	class FractalButtonListener implements KeyListener{
+		public void keyTyped(KeyEvent e) {
+
+		}
+		public void keyPressed(KeyEvent e) {
+			if (e.getKeyCode() == KeyEvent.VK_UP) {
+				currentFractal.stepUp();
+				refresh();
+			} else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+				currentFractal.stepDown();
+				refresh();
+			}
+		}
+		public void keyReleased(KeyEvent e) {
+			
+		}
+
 	}
 }

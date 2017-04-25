@@ -24,6 +24,7 @@ public abstract class Fractal {
 		if (currIteration > 0) {
 			currIteration--;
 		} 
+		// System.out.println(currIteration);
 	}
 
 	public void stepUp() {
@@ -31,6 +32,7 @@ public abstract class Fractal {
 		if (iterations.size() <= currIteration) {
 			iterations.add(nextIteration(iterations.get(currIteration-1)));
 		}
+		// System.out.println(currIteration);
 	}
 
 	abstract Path2D.Double constructFirstIteration();
