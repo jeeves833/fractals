@@ -17,10 +17,17 @@ public class FractalViewer {
 	private double[] p2;
 	private Fractal currentFractal;
 
+	private enum State {
+		DRAGON, C
+	}
+
+	private State currentState;
+
 	public FractalViewer() {
 		p1 = new double[]{160, 180};
 		p2 = new double[]{320, 180};
 		prepareGUI();
+		currentState = State.DRAGON;
 		currentFractal = new DragonCurve();
 		// currentFractal.stepUp();
 		refresh();
@@ -70,7 +77,7 @@ public class FractalViewer {
 
 	private void refresh() {
 		clearGUI();
-		currentFractal.drawTo(g2d, p2, p1);
+		currentFractal.drawTo(g2d, p1, p2);
 		mainFrame.repaint();
 	}
 
@@ -79,13 +86,42 @@ public class FractalViewer {
 
 		}
 		public void keyPressed(KeyEvent e) {
-			if (e.getKeyCode() == KeyEvent.VK_UP) {
-				currentFractal.stepUp();
-				refresh();
-			} else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-				currentFractal.stepDown();
-				refresh();
+			switch (e.getKeyCode()) {
+				case KeyEvent.VK_UP:
+					currentFractal.stepUp();
+					refresh();
+					break;
+				case KeyEvent.VK_DOWN:
+					currentFractal.stepDown();
+					refresh();
+					break;
+				case KeyEvent.VK_RIGHT:
+					switch (currentState) {
+						case DRAGON:
+							currentState = State.C;
+							currentFractal = new CCurve();
+							titleLabel.setText("Lévy C curve");
+							refresh();
+							break;
+					}
+					break;
+				case KeyEvent.VK_LEFT:
+					switch (currentState) {
+						case C:
+							currentState = State.DRAGON;
+							currentFractal = new DragonCurve();
+							titleLabel.setText("Dragon Curve");
+							refresh();
+							break;
+					}
 			}
+			// if (e.getKeyCode() == KeyEvent.VK_UP) {
+			// 	currentFractal.stepUp();
+			// 	refresh();
+			// } else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
+			// 	currentFractal.stepDown();
+			// 	refresh();
+			// }
 		}
 		public void keyReleased(KeyEvent e) {
 			

@@ -16,7 +16,7 @@ public abstract class Fractal {
 	}
 
 	public void drawTo(Graphics2D g2d, double[] p1, double[] p2) {
-		AffineTransform t = new AffineTransform(p2[0]-p1[0], p2[1]-p1[1], p1[1]-p2[1], p2[0]-p1[0], p1[0], p1[1]);
+		AffineTransform t = new AffineTransform(p2[0]-p1[0], p2[1]-p1[1], p2[1]-p1[1], p1[0]-p2[0], p1[0], p1[1]);
 		g2d.draw(new Path2D.Double(iterations.get(currIteration), t));
 	}
 
