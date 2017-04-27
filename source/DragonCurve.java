@@ -12,7 +12,8 @@ public class DragonCurve extends Fractal {
 		return start;
 	}
 
-	public Path2D.Double nextIteration(Path2D.Double previous) {
+	public Path2D.Double nextIteration() {
+		Path2D.Double previous = iterations.get(iterations.size() - 1);
 		Path2D.Double next = new Path2D.Double(previous);
 		AffineTransform r1 = new AffineTransform(0, 1, -1, 0, 1, -1);
 		AffineTransform r2 = new AffineTransform(0.5, 0.5, -0.5, 0.5, 0, 0);

@@ -30,11 +30,11 @@ public abstract class Fractal {
 	public void stepUp() {
 		currIteration++;
 		if (iterations.size() <= currIteration) {
-			iterations.add(nextIteration(iterations.get(currIteration-1)));
+			iterations.add(nextIteration());
 		}
 		// System.out.println(currIteration);
 	}
 
 	abstract Path2D.Double constructFirstIteration();
-	abstract Path2D.Double nextIteration(Path2D.Double previous);
+	abstract Path2D.Double nextIteration();
 }

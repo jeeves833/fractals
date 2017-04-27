@@ -18,7 +18,7 @@ public class FractalViewer {
 	private Fractal currentFractal;
 
 	private enum State {
-		DRAGON, C
+		DRAGON, C, GOSPER
 	}
 
 	private State currentState;
@@ -103,6 +103,13 @@ public class FractalViewer {
 							titleLabel.setText("Lévy C curve");
 							refresh();
 							break;
+						case C:
+							currentState = State.GOSPER;
+							currentFractal = new GosperCurve();
+							titleLabel.setText("Gosper Curve");
+							refresh();
+							break;
+						
 					}
 					break;
 				case KeyEvent.VK_LEFT:
@@ -113,6 +120,13 @@ public class FractalViewer {
 							titleLabel.setText("Dragon Curve");
 							refresh();
 							break;
+						case GOSPER:
+							currentState = State.C;
+							currentFractal = new CCurve();
+							titleLabel.setText("Lévy C curve");
+							refresh();
+							break;
+						
 					}
 			}
 			// if (e.getKeyCode() == KeyEvent.VK_UP) {
