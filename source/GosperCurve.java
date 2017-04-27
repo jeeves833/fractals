@@ -47,6 +47,7 @@ public class GosperCurve extends Fractal {
 					break;
 			}
 		}
+		
 		return result;
 	}
 }

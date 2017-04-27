@@ -62,6 +62,8 @@ public class FractalViewer {
 		g2d.fillRect(0, 0, 480, 360);
 		imageLabel = new JLabel(new ImageIcon(canvas));
 		imageLabel.addKeyListener(new FractalButtonListener());
+		imageLabel.addMouseListener(new FractalMoverInitial());
+		imageLabel.addMouseMotionListener(new FractalMover());
 		imageLabel.setFocusable(true);
 		mainFrame.add(imageLabel);
 		mainFrame.setVisible(true);
@@ -129,17 +131,41 @@ public class FractalViewer {
 						
 					}
 			}
-			// if (e.getKeyCode() == KeyEvent.VK_UP) {
-			// 	currentFractal.stepUp();
-			// 	refresh();
-			// } else if(e.getKeyCode() == KeyEvent.VK_DOWN) {
-			// 	currentFractal.stepDown();
-			// 	refresh();
-			// }
 		}
 		public void keyReleased(KeyEvent e) {
 			
 		}
 
 	}
+
+	private Point initialPoint;
+	class FractalMoverInitial implements MouseListener {
+		public void mouseClicked(MouseEvent e) {
+		}
+		public void mousePressed(MouseEvent e) {
+			initialPoint = e.getPoint();
+		}
+		public void mouseReleased(MouseEvent e) {
+		}
+		public void mouseEntered(MouseEvent e) {
+		}
+		public void mouseExited(MouseEvent e) {
+		}
+   }
+
+   class FractalMover implements MouseMotionListener {
+		public void mouseDragged(MouseEvent e) {
+			Point newPoint = e.getPoint();
+			int delX = newPoint.x - initialPoint.x;
+			int delY = newPoint.y - initialPoint.y;
+			p1[0] += delX;
+			p1[1] += delY;
+			p2[0] += delX;
+			p2[1] += delY;
+			initialPoint = newPoint;
+			refresh();
+		}
+		public void mouseMoved(MouseEvent e) {
+		}    
+   }
 }
