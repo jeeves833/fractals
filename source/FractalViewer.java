@@ -15,6 +15,8 @@ public class FractalViewer {
 	private Graphics2D g2d;
 	private double[] p1;
 	private double[] p2;
+	private double[] p1Initial;
+	private double[] p2Initial;
 	private Fractal currentFractal;
 
 	private enum State {
@@ -24,8 +26,11 @@ public class FractalViewer {
 	private State currentState;
 
 	public FractalViewer() {
-		p1 = new double[]{160, 180};
-		p2 = new double[]{320, 180};
+		p1Initial = new double[]{160, 180};
+		p2Initial = new double[]{320, 180};
+		p1 = new double[2];
+		p2 = new double[2];
+		resetView();
 		prepareGUI();
 		currentState = State.DRAGON;
 		currentFractal = new DragonCurve();
@@ -75,6 +80,13 @@ public class FractalViewer {
 		g2d.setPaint(Color.WHITE);
 		g2d.fillRect(0, 0, 480, 360);
 		g2d.setPaint(Color.BLACK);
+	}
+
+	private void resetView() {
+		for (int i = 0; i < 2; i++) {
+			p1[i] = p1Initial[i];
+			p2[i] = p2Initial[i];
+		}
 	}
 
 	private void refresh() {
@@ -130,6 +142,11 @@ public class FractalViewer {
 							break;
 						
 					}
+					break;
+				case KeyEvent.VK_C:
+					resetView();
+					refresh();
+					break;
 			}
 		}
 		public void keyReleased(KeyEvent e) {
